@@ -30,15 +30,21 @@ const ProductView = function () {
 
     return (
         <div>
-            {data.map((product, key) => {
-                return (
-                    <div className="" key={key}>
-                        <ProductCard product={product}/>
-                    </div>
-                );
-            })}
+            <div className="row row-cols-auto">
+                {data.map((product, key) => {
+                    return (
+                        <div className="my-3 mx-3" key={key}>
+                            <div className="col">
+                                <div className="">
+                                    <ProductCard product={product} />
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
         </div>
-    )
+    );
 };
 
 export default ProductView;

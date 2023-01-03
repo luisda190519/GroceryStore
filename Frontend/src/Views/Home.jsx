@@ -7,19 +7,18 @@ import "../CSS/Home.css";
 
 const Home = function () {
     return (
-        <div>
-            <div>
-                <Categories />
-            </div>
+        <div id="main">
             <div>
                 <Navbar />
             </div>
 
-            <div id="ProductView" className="mt-5">
-                adsadad
-                <ProductView/>
+            <div id="categories" className="ms-5">
+                <Categories />
             </div>
 
+            <div id="ProductView" className="">
+                <ProductView />
+            </div>
         </div>
     );
 };
