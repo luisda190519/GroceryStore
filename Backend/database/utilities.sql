@@ -1,0 +1,3 @@
+DELETE FROM Users;
+
+DROP TABLE Products;
