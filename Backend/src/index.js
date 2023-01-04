@@ -7,9 +7,12 @@ const validator = require("express-validator");
 const flash = require("connect-flash");
 const MySQLStore = require("express-mysql-session")(session);
 
+const authRoutes = require('./routes/authentication');
+const apiRoutes = require('./routes/api');
+
 const app = express();
 const port = 3000;
-const { database } = require('./keys');
+const { database } = require("./keys");
 
 //middlewares
 app.use(morgan("dev"));
@@ -20,10 +23,15 @@ app.use(
     session({
         secret: "luisda1905",
         resave: false,
-        saveUninitialized: true,
+        saveUninitialized: false,
+        cookie: { secure: true },
         store: new MySQLStore(database),
     })
 );
+
+//Routes
+app.use("/auth", authRoutes)
+app.use("/api", apiRoutes)
 
 app.listen(port, () => {
     console.log("Listen on port " + port);
