@@ -30,6 +30,7 @@ CREATE TABLE Products(
     price FLOAT NOT NULL,
     image_url VARCHAR(500) NOT NULL,
     vendor INT(11),
+    category VARCHAR(50),
     CONSTRAINT fk_vendor FOREIGN KEY(vendor) REFERENCES Users(id) 
 );
 
@@ -58,5 +59,11 @@ ALTER TABLE Cart
 
 DESCRIBE Cart;
 
-INSERT INTO Products(id, name, description, created_at, price, image_url, vendor)
-VALUES(1, "Hot Dog", "Hot dog made with butter bean bread, german sausage, and imported italian ketchup", "2018-02-26 16:16:17", 45.80, "https://cnnespanol.cnn.com/wp-content/uploads/2021/08/CNN-hotdog.jpeg?quality=100&strip=info", 1);
+INSERT INTO Products(id, name, description, created_at, price, image_url, vendor, category)
+VALUES(1, "Hot Dog", "Hot dog made with butter bean bread, german sausage, and imported italian ketchup", "2018-02-26 16:16:17", 45.80, "https://cnnespanol.cnn.com/wp-content/uploads/2021/08/CNN-hotdog.jpeg?quality=100&strip=info", 1, "Fast food");
+
+SELECT *
+FROM Products;
+
+ALTER TABLE Products
+ADD category VARCHAR(50);

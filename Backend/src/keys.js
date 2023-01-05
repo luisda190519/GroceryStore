@@ -3,7 +3,6 @@ module.exports = {
         connectionLimit: 10,
         host: "localhost",
         user: "root",
-        password: "Password1",
-        database: "TestDB",
+        database: "grocerystoredb",
     },
 };
