@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../Components/ProductCard";
+import { getRequest } from "../Components/Request";
 
-const ProductView = function ({products}) { 
-
+const ProductView = function ({ products, setProcutFocus }) {
     return (
         <div>
             <div className="row row-cols-auto">
@@ -11,7 +11,10 @@ const ProductView = function ({products}) {
                         <div className="my-5 mx-3" key={key}>
                             <div className="col">
                                 <div className="mt-5">
-                                    <ProductCard product={product} />
+                                    <ProductCard
+                                        product={product}
+                                        setProcutFocus={setProcutFocus}
+                                    />
                                 </div>
                             </div>
                         </div>

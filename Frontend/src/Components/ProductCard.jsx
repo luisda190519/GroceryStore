@@ -1,7 +1,7 @@
-const ProductCard = function ({ product }) {
+const ProductCard = function ({ product, setProcutFocus }) {
 
     function seeProduct(e){
-        e.preventDeafult();
+        setProcutFocus(product);
     }
 
     return (
