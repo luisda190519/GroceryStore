@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Categories = function ({ categories }) {
+const Categories = function ({ categories, requestProductsByCategory }) {
     const [numberCategories, setNumber] = useState(4);
 
     function showAllCategories(e, more) {
@@ -10,16 +10,20 @@ const Categories = function ({ categories }) {
         return setNumber(4);
     }
 
+    async function setCategory(e, name){
+        requestProductsByCategory(name)
+    }
+
     return (
         <div className="card" style={{ width: "18rem" }}>
-            <div className="card-header">
-                <b>Categories</b>
+            <div className="card-header" id="allCat" onClick={e=> setCategory(e, "All Products")}>
+                <b>All Categories</b>
             </div>
             <ul className="list-group list-group-flush">
                 {categories.map((category, key) => {
                     if (key <= numberCategories) {
                         return (
-                            <li className="list-group-item" key={key}>
+                            <li className="list-group-item" key={key} onClick={e=> setCategory(e, category.category)}>
                                 {category.category}
                             </li>
                         );
