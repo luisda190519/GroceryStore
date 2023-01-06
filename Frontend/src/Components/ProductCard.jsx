@@ -1,10 +1,15 @@
 const ProductCard = function ({ product }) {
+
+    function seeProduct(e){
+        e.preventDeafult();
+    }
+
     return (
         <div className="card col" style={{ width: "18rem" }}>
             <img
-                src="https://static-sevilla.abc.es/media/gurmesevilla/2012/01/comida-rapida-casera.jpg"
+                src={product.image_url}
                 className="card-img-top"
-                alt="..."
+                onClick={e => seeProduct(e)}
             />
             <div className="card-body">
                 <div className="card-text">

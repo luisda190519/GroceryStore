@@ -1,41 +1,16 @@
+import { useEffect, useState } from "react";
 import ProductCard from "../Components/ProductCard";
 
-const ProductView = function () {
-    let data = [
-        {
-            name: "Hola",
-            vendor: "zzz",
-            price: 99,
-            categories: "zzz",
-        },
-        {
-            name: "Hola",
-            vendor: "zzz",
-            price: 99,
-            categories: "zzz",
-        },
-        {
-            name: "Hola",
-            vendor: "zzz",
-            price: 99,
-            categories: "zzz",
-        },
-        {
-            name: "Hola",
-            vendor: "zzz",
-            price: 99,
-            categories: "zzz",
-        },
-    ];
+const ProductView = function ({products}) { 
 
     return (
         <div>
             <div className="row row-cols-auto">
-                {data.map((product, key) => {
+                {products.map((product, key) => {
                     return (
-                        <div className="my-3 mx-3" key={key}>
+                        <div className="my-5 mx-3" key={key}>
                             <div className="col">
-                                <div className="">
+                                <div className="mt-5">
                                     <ProductCard product={product} />
                                 </div>
                             </div>

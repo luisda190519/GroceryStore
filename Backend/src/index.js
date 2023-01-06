@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const session = require("express-session");
 const validator = require("express-validator");
 const flash = require("connect-flash");
+const cors = require('cors');
 const MySQLStore = require("express-mysql-session")(session);
 
 const authRoutes = require('./routes/authentication');
@@ -18,6 +19,8 @@ const { database } = require("./keys");
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors({origin: "http://127.0.0.1:5173"}));
+
 
 app.use(
     session({
