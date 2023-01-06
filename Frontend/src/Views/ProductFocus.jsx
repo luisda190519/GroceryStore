@@ -25,7 +25,7 @@ const ProductFocus = function ({ product, setProcutFocus }) {
                         </div>
                         <div className="col">
                             <h5 className="card-title">{product.name}</h5>
-                            <p className="card-text">{product.description}</p>
+                            <p className="card-text" id="prodDes">{product.description}</p>
                             <p className="card-text">
                                 Category: {product.category}
                             </p>

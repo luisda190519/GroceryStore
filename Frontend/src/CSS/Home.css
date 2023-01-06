@@ -25,3 +25,7 @@ body {
 #allCat{
     cursor: pointer;
 }
+
+#prodDes{
+    text-align:justify;
+}

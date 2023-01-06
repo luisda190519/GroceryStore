@@ -9,7 +9,9 @@ const Login = function(){
     const navigate = useNavigate()
 
     const login = async function(e){
-        
+        const user = await postRequest("/auth/login",{username, password})
+        console.log(user);
+        navigate("/")
     }
 
     const typeUsername = function(e){

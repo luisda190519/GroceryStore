@@ -6,7 +6,7 @@ helpers.encryptPassword = async (password) => {
     return await bcrypt.hash(password, salt);
 };
 
-helpers.mathPassword = async (password, savedPassword) => {
+helpers.matchPassword = async (password, savedPassword) => {
     try {
         return await bcrypt.compare(password, savedPassword);
     } catch (e) {

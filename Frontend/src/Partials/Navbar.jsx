@@ -1,4 +1,10 @@
+import { postRequest } from "../Components/Request";
+
 const Navbar = function () {
+    async function logout(e){
+        const user = await postRequest("/auth/logout",{})
+    }
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
@@ -117,7 +123,7 @@ const Navbar = function () {
                                 </a>
                             </li>
                             <li>
-                                <a className="dropdown-item" href="#">
+                                <a className="dropdown-item" onClick={e =>logout(e)} href="/login">
                                     Logout
                                 </a>
                             </li>

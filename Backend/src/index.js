@@ -14,6 +14,8 @@ const apiRoutes = require('./routes/api');
 const app = express();
 const port = 3000;
 const { database } = require("./keys");
+require('./utils/passport');
+
 
 //middlewares
 app.use(morgan("dev"));
@@ -31,6 +33,9 @@ app.use(
         store: new MySQLStore(database),
     })
 );
+
+app.use(passport.initialize());
+app.use(passport.authenticate('session'));
 
 //Routes
 app.use("/auth", authRoutes)
