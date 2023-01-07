@@ -34,8 +34,8 @@ const ProductCard = function ({ product, setProcutFocus }) {
                             <b className="fs-5">${product.price}</b>
                         </div>
 
-                        <select id="inputState" class="col form-select ms-2">
-                            <option selected>1</option>
+                        <select id="inputState" className="col form-select ms-2">
+                            <option defaultValue>1</option>
                             {numbers.map((number, key) => {
                                 return <option key={key}>{number}</option>;
                             })}

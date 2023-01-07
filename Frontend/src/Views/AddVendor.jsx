@@ -1,26 +1,19 @@
 import { postRequest } from "../Components/Request";
 import { useState } from "react";
 
-const AddVendor = function ({setHome}) {
-    const [name, setName] = useState("");
-    const [location, setLocation] = useState("");
-    const [empresa, setEmpresa] = useState("");
+const AddVendor = function ({ setHome }) {
+    const [product, setProduct] = useState({});
 
-    async function createVendor (e){
-        const vendor = await postRequest("/api/vendors",{name, location, empresa})
-        setHome()
+    async function createVendor(e) {
+        e.preventDefault();
+        setHome();
+        const vendor = await postRequest("/api/vendors", product);
     }
 
-    function typeName(e) {
-        setName(e.target.value)
-    }
-
-    function typeLocation(e) {
-        setLocation(e.target.value)
-    }
-
-    function typeEmpresa(e) {
-        setEmpresa(e.target.value)
+    function typeInput(e, property) {
+        let p = product;
+        p[property] = e.target.value;
+        setProduct(p);
     }
 
     return (
@@ -43,7 +36,7 @@ const AddVendor = function ({setHome}) {
                             class="form-control"
                             id="exampleFormControlInput1"
                             placeholder=""
-                            onBlur={e =>typeName(e)}
+                            onBlur={(e) => typeInput(e, "name")}
                         />
                     </div>
 
@@ -59,7 +52,7 @@ const AddVendor = function ({setHome}) {
                             class="form-control"
                             id="exampleFormControlInput2"
                             placeholder=""
-                            onBlur={e =>typeLocation(e)}
+                            onBlur={(e) => typeInput(e, "location")}
                         />
                     </div>
 
@@ -75,7 +68,7 @@ const AddVendor = function ({setHome}) {
                             class="form-control"
                             id="exampleFormControlInput3"
                             placeholder=""
-                            onBlur={e =>typeEmpresa(e)}
+                            onBlur={(e) => typeInput(e, "empresa")}
                         />
                     </div>
                 </div>

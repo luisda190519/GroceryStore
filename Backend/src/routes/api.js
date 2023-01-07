@@ -1,3 +1,4 @@
+const { query } = require("express");
 const express = require("express");
 const router = express.Router();
 
@@ -16,18 +17,23 @@ router.get("/categories", async (req, res) => {
 });
 
 router.post("/products", async (req, res) => {
+    let vendor = await pool.query(`SELECT id FROM Vendor WHERE name = "${req.body.vendor}"`)
+    vendor = JSON.parse(JSON.stringify(vendor));    
+    
     const product = {
         name: req.body.name,
         description: req.body.description,
         created_at: req.body.created_at,
         price: req.body.price,
         image_url: req.body.image_url,
-        vendor: req.body.vendor,
+        vendor: vendor[0].id,
         category: req.body.category,
     };
+
     const productCreated = await pool.query(`INSERT INTO Products set ?`, [
         product,
     ]);
+    
 });
 
 router.get("/products/category/:category", async (req, res) => {
@@ -46,7 +52,7 @@ router.get("/products/:productID", async (req, res) => {
 
 router.get("/vendorName/:vendorID", async (req, res) => {
     const name = await pool.query(
-        `SELECT name FROM Vendor WHERE ${req.params.vendorID};`
+        `SELECT name FROM Vendor WHERE id = ${req.params.vendorID};`
     );
     res.json(name);
 });

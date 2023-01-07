@@ -27,7 +27,7 @@ const ProductFocus = function ({ product, setProcutFocus }) {
                 <div className="card-body">
                     <div className="row">
                         <div className="col">
-                            <img src={product.image_url} class="card-img" />
+                            <img src={product.image_url} className="card-img" />
                             <div className="row row-cols-auto mt-3">
                                 <h5 className="card-title">
                                     Price: ${product.price}
