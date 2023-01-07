@@ -1,8 +1,11 @@
 import { postRequest } from "../Components/Request";
 
 const Navbar = function () {
-    async function logout(e){
-        const user = await postRequest("/auth/logout",{})
+    async function logout(e) {
+        e.preventDefault();
+        const user = await postRequest("/auth/logout", {});
+        localStorage.clear();
+        window.location.reload(true);
     }
 
     return (
@@ -26,8 +29,8 @@ const Navbar = function () {
                 >
                     <a className="navbar-brand mt-2 mt-lg-0" href="#">
                         <img
-                            src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
-                            height="15"
+                            src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Olimpical.png"
+                            height="35"
                             alt="MDB Logo"
                             loading="lazy"
                         />
@@ -39,13 +42,13 @@ const Navbar = function () {
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                About
+                            <a className="nav-link" href="/addProduct">
+                                Add Product
                             </a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="#">
-                                Contact
+                                About
                             </a>
                         </li>
                     </ul>
@@ -54,43 +57,11 @@ const Navbar = function () {
                 <div className="d-flex align-items-center">
                     <a className="text-reset me-3" href="#">
                         <i className="fas fa-shopping-cart"></i>
+                        <span className="badge rounded-pill badge-notification bg-danger">
+                            1
+                        </span>
                     </a>
-
-                    <div className="dropdown">
-                        <a
-                            className="text-reset me-3 dropdown-toggle hidden-arrow"
-                            href="#"
-                            id="navbarDropdownMenuLink"
-                            role="button"
-                            data-mdb-toggle="dropdown"
-                            aria-expanded="false"
-                        >
-                            <i className="fas fa-bell"></i>
-                            <span className="badge rounded-pill badge-notification bg-danger">
-                                1
-                            </span>
-                        </a>
-                        <ul
-                            className="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="navbarDropdownMenuLink"
-                        >
-                            <li>
-                                <a className="dropdown-item" href="#">
-                                    Some news
-                                </a>
-                            </li>
-                            <li>
-                                <a className="dropdown-item" href="#">
-                                    Another news
-                                </a>
-                            </li>
-                            <li>
-                                <a className="dropdown-item" href="#">
-                                    Something else here
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    
                     <div className="dropdown">
                         <a
                             className="dropdown-toggle d-flex align-items-center hidden-arrow"
@@ -101,7 +72,7 @@ const Navbar = function () {
                             aria-expanded="false"
                         >
                             <img
-                                src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                                src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
                                 className="rounded-circle"
                                 height="25"
                                 alt="Black and White Portrait of a Man"
@@ -123,7 +94,11 @@ const Navbar = function () {
                                 </a>
                             </li>
                             <li>
-                                <a className="dropdown-item" onClick={e =>logout(e)} href="/login">
+                                <a
+                                    className="dropdown-item"
+                                    onClick={(e) => logout(e)}
+                                    href="/login"
+                                >
                                     Logout
                                 </a>
                             </li>

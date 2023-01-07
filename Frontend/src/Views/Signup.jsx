@@ -2,7 +2,7 @@ import { useState } from "react";
 import { postRequest } from "../Components/Request";
 import { useNavigate } from "react-router-dom";
 
-const Signup = function () {
+const Signup = function ({setUser}) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [incorrect, setIncorrect] = useState(false);
@@ -10,9 +10,14 @@ const Signup = function () {
 
     const createAccount = async function (e) {
         e.preventDefault();
-        const user = await postRequest("/auth/signup", { username, password });
-        console.log(user);
-        navigate("/")
+        try {
+            const user = await postRequest("/auth/signup", { username, password });
+            setUser(user)
+            navigate("/")
+        } catch (error) {
+            setIncorrect(true)
+        }
+        
     };
 
     const typeUsername = function (e) {

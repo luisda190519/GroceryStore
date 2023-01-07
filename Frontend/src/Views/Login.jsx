@@ -2,7 +2,7 @@ import { useState } from "react";
 import { postRequest } from "../Components/Request";
 import { useNavigate } from "react-router-dom";
 
-const Login = function(){
+const Login = function({setUser}){
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [incorrect, setIncorrect] = useState(false)
@@ -13,6 +13,7 @@ const Login = function(){
 
         try {
             const user = await postRequest("/auth/login", {username: username, password: password})
+            setUser(user)
             return navigate("/")
         } catch (error) {
             setIncorrect(true)
