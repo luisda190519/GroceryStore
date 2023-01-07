@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import Navbar from "../Partials/Navbar";
+import Footer from "../Partials/Footer";
 import Categories from "../Partials/Categories";
 import ProductView from "./ProductViews";
 import ProductFocus from "./ProductFocus";
@@ -43,22 +44,22 @@ const Home = function () {
         }
     }
 
-    function setHome(){
-        setProcutFocus(false)
-        setAddProduct(false)
-        setAddVendor(false)
+    function setHome() {
+        setProcutFocus(false);
+        setAddProduct(false);
+        setAddVendor(false);
     }
 
-    function setProduct(){
-        setProcutFocus(false)
-        setAddProduct(true)
-        setAddVendor(false)
+    function setProduct() {
+        setProcutFocus(false);
+        setAddProduct(true);
+        setAddVendor(false);
     }
 
-    function setVendor(){
-        setProcutFocus(false)
-        setAddProduct(false)
-        setAddVendor(true)
+    function setVendor() {
+        setProcutFocus(false);
+        setAddProduct(false);
+        setAddVendor(true);
     }
 
     useEffect(() => {
@@ -72,13 +73,17 @@ const Home = function () {
         productFocus,
         categoryFocus,
         addProduct,
-        vendor
+        vendor,
     ]);
 
     return (
         <div id="main">
             <div>
-                <Navbar setAddProduct={setProduct} setAddVendor={setVendor} setHome={setHome}/>
+                <Navbar
+                    setAddProduct={setProduct}
+                    setAddVendor={setVendor}
+                    setHome={setHome}
+                />
             </div>
 
             {productFocus ? (
@@ -90,7 +95,9 @@ const Home = function () {
                 </div>
             ) : addProduct ? (
                 <AddProduct setHome={setHome} />
-            ) : vendor ? <AddVendor setHome={setHome} />  :(
+            ) : vendor ? (
+                <AddVendor setHome={setHome} />
+            ) : (
                 <div className="container">
                     <div className="row">
                         <div id="categories" className="col-1">
@@ -113,6 +120,10 @@ const Home = function () {
                     </div>
                 </div>
             )}
+
+            <div className="mt-3">
+                <Footer />
+            </div>
         </div>
     );
 };
