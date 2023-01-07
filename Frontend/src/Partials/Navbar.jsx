@@ -1,16 +1,11 @@
 import { postRequest } from "../Components/Request";
 
-const Navbar = function ({setAddProduct}) {
+const Navbar = function ({setAddProduct, setAddVendor, setHome}) {
     async function logout(e) {
         e.preventDefault();
         const user = await postRequest("/auth/logout", {});
         localStorage.clear();
         window.location.reload(true);
-    }
-
-    function addProduct(e){
-        e.preventDefault();
-        setAddProduct(true)
     }
 
     return (
@@ -42,17 +37,17 @@ const Navbar = function ({setAddProduct}) {
                     </a>
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                Categories
+                            <a className="nav-link" id="clickNav" onClick={e => setHome()}>
+                                Home
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" id="clickNav" onClick={e => addProduct(e)}>
+                            <a className="nav-link" id="clickNav" onClick={e => setAddProduct()}>
                                 Add Product
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/addVendor">
+                            <a className="nav-link" id="clickNav" onClick={e => setAddVendor()}>
                                 Add Vendor
                             </a>
                         </li>

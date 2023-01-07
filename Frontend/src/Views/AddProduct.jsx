@@ -1,16 +1,16 @@
 import { getRequest } from "../Components/Request";
 import { useEffect, useState } from "react";
 
-const AddProduct = function ({setAddProduct}) {
+const AddProduct = function ({setHome}) {
     const [vendors, setVendors] = useState([]);
-
-    function goBack(){
-        setAddProduct(false)
-    }
 
     async function getVendors(){
         const vendors = await getRequest("/api/vendors")
         setVendors(vendors)
+    }
+
+    async function createProduct(e){
+        e.preventDefault();
     }
 
     useEffect(() =>{
@@ -19,8 +19,8 @@ const AddProduct = function ({setAddProduct}) {
 
 
     return (
-        <div className="container mt-4 w-75">
-            <button className="btn btn-primary mb-4" onClick={(e) => goBack(e)}>
+        <div className="container mt-4 w-75 mb-5">
+            <button className="btn btn-primary mb-4" onClick={(e) => setHome()}>
                 Back to all Products
             </button>
             <div className="card" id="productDescription">
@@ -117,8 +117,8 @@ const AddProduct = function ({setAddProduct}) {
                         </select>
                     </div>
                 </div>
-                <button className="btn btn-primary mb-5 w-75" style={{marginLeft:"6.5rem"}}  onClick={(e) => goBack(e)}>
-                Back to all Products
+                <button className="btn btn-primary mb-5 w-75" style={{marginLeft:"8rem"}}  onClick={(e) => createProduct(e)}>
+                Create Product
             </button>
             </div>
         </div>

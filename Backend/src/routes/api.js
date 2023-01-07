@@ -9,7 +9,9 @@ router.get("/products", async (req, res) => {
 });
 
 router.get("/categories", async (req, res) => {
-    const categories = await pool.query("SELECT distinct(category) FROM Products");
+    const categories = await pool.query(
+        "SELECT distinct(category) FROM Products"
+    );
     res.json(categories);
 });
 
@@ -42,14 +44,29 @@ router.get("/products/:productID", async (req, res) => {
     res.json(products);
 });
 
-router.get("/vendorName/:vendorID", async(req, res) =>{
-    const name = await pool.query(`SELECT name FROM Vendor WHERE ${req.params.vendorID};`)
-    res.json(name)
-})
+router.get("/vendorName/:vendorID", async (req, res) => {
+    const name = await pool.query(
+        `SELECT name FROM Vendor WHERE ${req.params.vendorID};`
+    );
+    res.json(name);
+});
 
-router.get("/vendors", async(req, res) =>{
-    const vendors = await pool.query(`SELECT name FROM Vendor;`)
-    res.json(vendors)
-})
+router.get("/vendors", async (req, res) => {
+    const vendors = await pool.query(`SELECT name FROM Vendor;`);
+    res.json(vendors);
+});
+
+router.post("/vendors", async (req, res) => {
+    const vendor = {
+        name: req.body.name,
+        location: req.body.location,
+        empresa: req.body.empresa,
+    };
+
+    const vendorCreated = await pool.query(`INSERT INTO Vendor set ?`, [
+        vendor,
+    ]);
+
+});
 
 module.exports = router;

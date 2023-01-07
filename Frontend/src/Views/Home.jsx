@@ -5,6 +5,7 @@ import Categories from "../Partials/Categories";
 import ProductView from "./ProductViews";
 import ProductFocus from "./ProductFocus";
 import AddProduct from "./AddProduct";
+import AddVendor from "./AddVendor";
 import { getRequest } from "../Components/Request";
 
 //Css
@@ -15,6 +16,7 @@ const Home = function () {
     const [categories, setCategories] = useState([]);
     const [productFocus, setProcutFocus] = useState(false);
     const [addProduct, setAddProduct] = useState(false);
+    const [vendor, setAddVendor] = useState(false);
     const [categoryFocus, setCategoryFocus] = useState("All Products");
 
     async function requestProducts() {
@@ -41,6 +43,24 @@ const Home = function () {
         }
     }
 
+    function setHome(){
+        setProcutFocus(false)
+        setAddProduct(false)
+        setAddVendor(false)
+    }
+
+    function setProduct(){
+        setProcutFocus(false)
+        setAddProduct(true)
+        setAddVendor(false)
+    }
+
+    function setVendor(){
+        setProcutFocus(false)
+        setAddProduct(false)
+        setAddVendor(true)
+    }
+
     useEffect(() => {
         requestProducts();
         requestCategories();
@@ -52,12 +72,13 @@ const Home = function () {
         productFocus,
         categoryFocus,
         addProduct,
+        vendor
     ]);
 
     return (
         <div id="main">
             <div>
-                <Navbar setAddProduct={setAddProduct} />
+                <Navbar setAddProduct={setProduct} setAddVendor={setVendor} setHome={setHome}/>
             </div>
 
             {productFocus ? (
@@ -68,8 +89,8 @@ const Home = function () {
                     />
                 </div>
             ) : addProduct ? (
-                <AddProduct setAddProduct={setAddProduct} />
-            ) : (
+                <AddProduct setHome={setHome} />
+            ) : vendor ? <AddVendor setHome={setHome} />  :(
                 <div className="container">
                     <div className="row">
                         <div id="categories" className="col-1">
