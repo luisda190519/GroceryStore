@@ -48,6 +48,8 @@ const Home = function () {
         setProcutFocus(false);
         setAddProduct(false);
         setAddVendor(false);
+        setCategoryFocus("All Products");
+        requestProducts();
     }
 
     function setProduct() {
@@ -121,7 +123,7 @@ const Home = function () {
                 </div>
             )}
 
-            <div className="mt-3">
+            <div className="mt-5">
                 <Footer />
             </div>
         </div>

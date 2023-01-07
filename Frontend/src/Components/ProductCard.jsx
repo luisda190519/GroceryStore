@@ -2,8 +2,19 @@ import { useEffect, useState } from "react";
 import { getRequest } from "../Components/Request";
 
 const ProductCard = function ({ product, setProcutFocus }) {
-    const [vendor, setVendor] = useState(null);
     const numbers = [2, 3, 4, 5, 6, 7];
+    const [vendor, setVendor] = useState(null);
+    const [quantity, setQuantity] = useState(1);
+    const [user, setUser] = useState(() =>
+        localStorage.getItem("user")
+            ? JSON.parse(localStorage.getItem("user"))
+            : false
+    );
+
+    async function addProductToCart(e) {
+        e.preventDefault();
+        console.log(user);
+    }
 
     function seeProduct(e) {
         setProcutFocus(product);
@@ -34,7 +45,11 @@ const ProductCard = function ({ product, setProcutFocus }) {
                             <b className="fs-5">${product.price}</b>
                         </div>
 
-                        <select id="inputState" className="col form-select ms-2">
+                        <select
+                            id="inputState"
+                            className="col form-select ms-2"
+                            onBlur={(e) => setQuantity(e.target.value)}
+                        >
                             <option defaultValue>1</option>
                             {numbers.map((number, key) => {
                                 return <option key={key}>{number}</option>;
@@ -46,6 +61,7 @@ const ProductCard = function ({ product, setProcutFocus }) {
                         type="button"
                         className="btn btn-primary my-3"
                         style={{ width: "15.5rem" }}
+                        onClick={(e) => addProductToCart(e)}
                     >
                         Buy Now!
                     </button>
