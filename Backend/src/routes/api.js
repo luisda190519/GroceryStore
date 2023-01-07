@@ -42,4 +42,9 @@ router.get("/products/:productID", async (req, res) => {
     res.json(products);
 });
 
+router.get("/vendorName/:vendorID", async(req, res) =>{
+    const name = await pool.query(`SELECT name FROM Vendor WHERE ${req.params.vendorID};`)
+    res.json(name)
+})
+
 module.exports = router;

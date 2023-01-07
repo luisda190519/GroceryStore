@@ -5,7 +5,9 @@ const localStrategy = require("passport-local").Strategy;
 const pool = require("../database");
 const helpers = require("../utils/helpers");
 
-router.post("/login", passport.authenticate("local"), (req, res) => {});
+router.post("/login", passport.authenticate("local"), (req, res) => {
+    res.json(req.session.passport.user);
+});
 
 router.post("/logout", (req, res) => {
     req.logout(function (err) {

@@ -10,9 +10,15 @@ passport.use(
             `SELECT * FROM Users WHERE username = "${username}"`
         );
 
-        user = JSON.parse(JSON.stringify(user))[0]
+        user = JSON.parse(JSON.stringify(user))[0];
 
-        if (!helpers.matchPassword(password, user.password)) {
+        try {
+            if (!helpers.matchPassword(password, user.password)) {
+                return cb(null, false, {
+                    message: "Incorrect username or password.",
+                });
+            }
+        } catch (error) {
             return cb(null, false, {
                 message: "Incorrect username or password.",
             });

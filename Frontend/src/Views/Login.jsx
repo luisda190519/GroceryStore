@@ -9,9 +9,16 @@ const Login = function(){
     const navigate = useNavigate()
 
     const login = async function(e){
-        const user = await postRequest("/auth/login",{username, password})
-        console.log(user);
-        navigate("/")
+        e.preventDefault();
+
+        try {
+            const user = await postRequest("/auth/login", {username: username, password: password})
+            return navigate("/")
+        } catch (error) {
+            setIncorrect(true)
+        }
+
+        
     }
 
     const typeUsername = function(e){
