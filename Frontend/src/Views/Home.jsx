@@ -4,6 +4,7 @@ import Navbar from "../Partials/Navbar";
 import Categories from "../Partials/Categories";
 import ProductView from "./ProductViews";
 import ProductFocus from "./ProductFocus";
+import AddProduct from "./AddProduct";
 import { getRequest } from "../Components/Request";
 
 //Css
@@ -13,6 +14,7 @@ const Home = function () {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [productFocus, setProcutFocus] = useState(false);
+    const [addProduct, setAddProduct] = useState(false);
     const [categoryFocus, setCategoryFocus] = useState("All Products");
 
     async function requestProducts() {
@@ -44,52 +46,52 @@ const Home = function () {
         requestCategories();
     }, []);
 
-    useEffect(() => {}, [products, categories, productFocus, categoryFocus]);
+    useEffect(() => {}, [
+        products,
+        categories,
+        productFocus,
+        categoryFocus,
+        addProduct,
+    ]);
 
-    if (productFocus) {
-        return (
-            <div id="main">
-                <div>
-                    <Navbar />
-                </div>
+    return (
+        <div id="main">
+            <div>
+                <Navbar setAddProduct={setAddProduct} />
+            </div>
 
+            {productFocus ? (
                 <div id="ProductView" className="mx-auto">
                     <ProductFocus
                         product={productFocus}
                         setProcutFocus={setProcutFocus}
                     />
                 </div>
-            </div>
-        );
-    }
-
-    return (
-        <div id="main">
-            <div>
-                <Navbar />
-            </div>
-
-            <div className="container">
-                <div className="row">
-                    <div id="categories" className="col-1">
-                        <Categories
-                            categories={categories}
-                            requestProductsByCategory={
-                                requestProductsByCategory
-                            }
-                        />
-                    </div>
-                    <div id="ProductView" className="col">
-                        <div className="d-flex">
-                            <ProductView
-                                products={products}
-                                setProcutFocus={setProcutFocus}
-                                categoryFocus={categoryFocus}
+            ) : addProduct ? (
+                <AddProduct setAddProduct={setAddProduct} />
+            ) : (
+                <div className="container">
+                    <div className="row">
+                        <div id="categories" className="col-1">
+                            <Categories
+                                categories={categories}
+                                requestProductsByCategory={
+                                    requestProductsByCategory
+                                }
                             />
+                        </div>
+                        <div id="ProductView" className="col">
+                            <div className="d-flex">
+                                <ProductView
+                                    products={products}
+                                    setProcutFocus={setProcutFocus}
+                                    categoryFocus={categoryFocus}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };

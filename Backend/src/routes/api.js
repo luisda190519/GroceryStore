@@ -47,4 +47,9 @@ router.get("/vendorName/:vendorID", async(req, res) =>{
     res.json(name)
 })
 
+router.get("/vendors", async(req, res) =>{
+    const vendors = await pool.query(`SELECT name FROM Vendor;`)
+    res.json(vendors)
+})
+
 module.exports = router;
