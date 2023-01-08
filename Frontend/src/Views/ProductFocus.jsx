@@ -1,8 +1,11 @@
-import { getRequest } from "../Components/Request";
+import { getRequest, postRequest } from "../Components/Request";
 import { useEffect, useState } from "react";
 
-const ProductFocus = function ({ product, setProcutFocus }) {
+const ProductFocus = function ({ product, setProcutFocus, getCart, user }) {
     const [vendor, setVendor] = useState(null);
+    const [quantity, setQuantity] = useState(1);
+    const [added, setAdded] = useState(false);
+    const numbers = [2, 3, 4, 5, 6, 7];
 
     function goBack(e) {
         setProcutFocus(false);
@@ -17,6 +20,26 @@ const ProductFocus = function ({ product, setProcutFocus }) {
         }
         const vendor = await getRequest("/api/vendorName/" + product.vendor);
         return setVendor(vendor[0].name);
+    }
+
+    function productAdded() {
+        setAdded(false);
+    }
+
+    async function addProductToCart(e) {
+        e.preventDefault();
+        const total = quantity * product.price;
+        const cart = {
+            total: total,
+            userID: user.id,
+            productID: product.id,
+            vendorID: vendor.id,
+        };
+
+        setAdded(true);
+        setTimeout(productAdded, 3000);
+        getCart();
+        const sentCart = await postRequest("/api/cart", cart);
     }
 
     useEffect(() => {
@@ -35,16 +58,54 @@ const ProductFocus = function ({ product, setProcutFocus }) {
                         <div className="col">
                             <img src={product.image_url} className="card-img" />
                             <div className="row row-cols-auto mt-3">
-                                <h5 className="card-title">
-                                    Price: ${product.price}
-                                </h5>
-                                {product.quantity ? (
-                                    <div></div>
-                                ) : (
-                                    <button className="btn btn-danger w-25 mx-5 ">
-                                        Buy!
-                                    </button>
-                                )}
+                                <div className="row d-flex center">
+                                    <h5 className="card-title col">
+                                        Price: ${product.price}
+                                    </h5>
+                                    {product.quantity ? (
+                                        <div></div>
+                                    ) : (
+                                        <div className="col">
+                                            <select
+                                                id="inputState"
+                                                className="col form-select w-125 mt-3"
+                                                onBlur={(e) =>
+                                                    setQuantity(e.target.value)
+                                                }
+                                            >
+                                                <option defaultValue>1</option>
+                                                {numbers.map((number, key) => {
+                                                    return (
+                                                        <option key={key}>
+                                                            {number}
+                                                        </option>
+                                                    );
+                                                })}
+                                            </select>
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="col">
+                                    {added ? (
+                                        <button
+                                            type="button"
+                                            className="btn btn-success my-3"
+                                            style={{ width: "12rem" }}
+                                            onClick={(e) => addProductToCart(e)}
+                                        >
+                                            Product added
+                                        </button>
+                                    ) : (
+                                        <button
+                                            type="button"
+                                            className="btn btn-primary my-3"
+                                            style={{ width: "12rem" }}
+                                            onClick={(e) => addProductToCart(e)}
+                                        >
+                                            Buy Now!
+                                        </button>
+                                    )}
+                                </div>
                             </div>
                         </div>
                         <div className="col">

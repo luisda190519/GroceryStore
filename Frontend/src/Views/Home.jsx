@@ -56,6 +56,7 @@ const Home = function ({ user }) {
     async function getCart() {
         const cart = await getRequest("/api/cart/" + user.id);
         setCart(cart);
+        getCart();
     }
 
     function setHome() {
@@ -140,12 +141,14 @@ const Home = function ({ user }) {
                     <ProductFocus
                         product={productFocus}
                         setProcutFocus={setProcutFocus}
+                        getCart={getCart}
+                        user={user}
                     />
                 </div>
             ) : addProduct ? (
-                <AddProduct setHome={setHome} />
+                <AddProduct setHome={setHome} flashMessage={flashMessage}/>
             ) : vendor ? (
-                <AddVendor setHome={setHome} />
+                <AddVendor setHome={setHome} flashMessage={flashMessage}/>
             ) : checkout ? (
                 <Checkout
                     setHome={setHome}
@@ -178,7 +181,7 @@ const Home = function ({ user }) {
                 </div>
             )}
 
-            <div className="mt-5">
+            <div className="" style={{ marginTop: "13rem" }}>
                 <Footer />
             </div>
         </div>

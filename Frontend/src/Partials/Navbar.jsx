@@ -1,7 +1,13 @@
 import { getRequest, postRequest } from "../Components/Request";
 import { useState, useEffect } from "react";
 
-const Navbar = function ({ setAddProduct, setAddVendor, setHome, goToChek, cart, getCart }) {
+const Navbar = function ({
+    setAddProduct,
+    setAddVendor,
+    setHome,
+    goToChek,
+    cart,
+}) {
     async function logout(e) {
         e.preventDefault();
         const user = await postRequest("/auth/logout", {});
@@ -9,11 +15,7 @@ const Navbar = function ({ setAddProduct, setAddVendor, setHome, goToChek, cart,
         window.location.reload(true);
     }
 
-    //console.log(cart)
-
-    useEffect(() => {
-        //getCart();
-    }, [cart]);
+    useEffect(() => {}, [cart]);
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -34,24 +36,17 @@ const Navbar = function ({ setAddProduct, setAddVendor, setHome, goToChek, cart,
                     className="collapse navbar-collapse"
                     id="navbarSupportedContent"
                 >
-                    <a className="navbar-brand mt-2 mt-lg-0" href="#">
+                    <a className="navbar-brand mt-2 mt-lg-0">
                         <img
                             src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Olimpical.png"
                             height="35"
                             alt="MDB Logo"
                             loading="lazy"
+                            onClick={(e) => setHome()}
+                            id="logo"
                         />
                     </a>
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li className="nav-item">
-                            <a
-                                className="nav-link"
-                                id="clickNav"
-                                onClick={(e) => setHome()}
-                            >
-                                Home
-                            </a>
-                        </li>
                         <li className="nav-item">
                             <a
                                 className="nav-link"
@@ -68,11 +63,6 @@ const Navbar = function ({ setAddProduct, setAddVendor, setHome, goToChek, cart,
                                 onClick={(e) => setAddVendor()}
                             >
                                 Add Vendor
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                About
                             </a>
                         </li>
                     </ul>
@@ -111,16 +101,6 @@ const Navbar = function ({ setAddProduct, setAddVendor, setHome, goToChek, cart,
                             className="dropdown-menu dropdown-menu-end"
                             aria-labelledby="navbarDropdownMenuAvatar"
                         >
-                            <li>
-                                <a className="dropdown-item" href="#">
-                                    My profile
-                                </a>
-                            </li>
-                            <li>
-                                <a className="dropdown-item" href="#">
-                                    Settings
-                                </a>
-                            </li>
                             <li>
                                 <a
                                     className="dropdown-item"

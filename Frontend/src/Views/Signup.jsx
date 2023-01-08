@@ -12,7 +12,7 @@ const Signup = function ({setUser}) {
         e.preventDefault();
         try {
             const user = await postRequest("/auth/signup", { username, password });
-            setUser(user)
+            await setUser(user)
             navigate("/")
         } catch (error) {
             setIncorrect(true)

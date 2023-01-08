@@ -1,7 +1,7 @@
 import { getRequest, postRequest } from "../Components/Request";
 import { useEffect, useState } from "react";
 
-const AddProduct = function ({ setHome }) {
+const AddProduct = function ({ setHome, flashMessage }) {
     const [vendors, setVendors] = useState([]);
     const [product, setProduct] = useState({});
 
@@ -12,8 +12,9 @@ const AddProduct = function ({ setHome }) {
 
     async function createProduct(e) {
         e.preventDefault();
-        setHome()
         const productCreated = await postRequest("/api/products", product);
+        setHome()
+        flashMessage("Product created succesfully")
     }
 
     function typeInput(e, property) {

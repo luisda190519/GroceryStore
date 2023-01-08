@@ -35,6 +35,8 @@ router.post("/products", async (req, res) => {
     const productCreated = await pool.query(`INSERT INTO Products set ?`, [
         product,
     ]);
+
+    res.json(productCreated);
 });
 
 router.get("/products/category/:category", async (req, res) => {
@@ -73,6 +75,8 @@ router.post("/vendors", async (req, res) => {
     const vendorCreated = await pool.query(`INSERT INTO Vendor set ?`, [
         vendor,
     ]);
+
+    res.json(vendorCreated);
 });
 
 router.post("/cart", async (req, res) => {
@@ -83,6 +87,7 @@ router.post("/cart", async (req, res) => {
         vendorID: req.body.vendorID,
     };
     const productAdded = await pool.query(`INSERT INTO Cart set ?`, [product]);
+    res.json(productAdded);
 });
 
 router.get("/cart/:userID", async (req, res) => {

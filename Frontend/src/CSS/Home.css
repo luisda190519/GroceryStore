@@ -43,5 +43,13 @@ body {
 }
 
 .table td {
-    text-align: center;   
- }
+    text-align: center;
+}
+
+#logo {
+    cursor: pointer;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}

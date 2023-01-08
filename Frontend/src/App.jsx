@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Home from "./Views/Home";
 import Login from "./Views/Login";
 import Signup from "./Views/Signup";
@@ -12,9 +12,16 @@ function App() {
         : false);
 
     function setLocalUser(user){
-        localStorage.setItem('user', JSON.stringify(user))
-        setUser(user)
+        if (user){
+            localStorage.setItem('user', JSON.stringify(user))
+            setUser(user)
+        }
+        
     }
+
+    useEffect(()=>{
+       
+    },[user])
 
     return (
         <BrowserRouter>

@@ -13,7 +13,7 @@ const Login = function({setUser}){
 
         try {
             const user = await postRequest("/auth/login", {username: username, password: password})
-            setUser(user)
+            await setUser(user)
             return navigate("/")
         } catch (error) {
             setIncorrect(true)

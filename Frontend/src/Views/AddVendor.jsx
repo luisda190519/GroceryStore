@@ -1,12 +1,13 @@
 import { postRequest } from "../Components/Request";
 import { useState } from "react";
 
-const AddVendor = function ({ setHome }) {
+const AddVendor = function ({ setHome, flashMessage }) {
     const [product, setProduct] = useState({});
 
     async function createVendor(e) {
         e.preventDefault();
         setHome();
+        flashMessage("Vendor created succesfully")
         const vendor = await postRequest("/api/vendors", product);
     }
 
