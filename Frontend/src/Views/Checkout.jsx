@@ -1,7 +1,7 @@
 import { getRequest, postRequest } from "../Components/Request";
 import { useState, useEffect } from "react";
 
-const Checkout = function ({ setHome }) {
+const Checkout = function ({ setHome, flashMessage }) {
     const [cart, setCart] = useState({});
     const [products, setProducts] = useState([[{}]]);
     const [user, setUser] = useState(() =>
@@ -13,6 +13,7 @@ const Checkout = function ({ setHome }) {
     async function payTheCart() {
         const pay = await postRequest("/api/payCart/" + user.id);
         setHome();
+        flashMessage("Cart succesfully paid");
     }
 
     async function getCart() {
@@ -20,7 +21,6 @@ const Checkout = function ({ setHome }) {
         const products = await getRequest("/api/getProductsByUser/" + user.id);
         setCart(cart);
         setProducts(products);
-        console.log(cart.length);
     }
 
     useEffect(() => {
@@ -31,7 +31,7 @@ const Checkout = function ({ setHome }) {
 
     return (
         <div>
-            {(cart.length !== 0) ? (
+            {cart.length !== 0 ? (
                 <div className="container">
                     <table className="table table-striped table-hover table-bordered mt-5">
                         <thead>
@@ -104,7 +104,25 @@ const Checkout = function ({ setHome }) {
                     </div>
                 </div>
             ) : (
-                <div className="container"></div>
+                <div className="container">
+                    <div className="d-flex align-items-center justify-content-center vh-100">
+                        <div className="text-center">
+                            <h1 className="display-1 fw-bold">
+                                Your cart is empty
+                            </h1>
+                            <p className="fs-3">
+                                {" "}
+                                <span className="text-primary">
+                                    Add products{" "}
+                                </span>{" "}
+                                to your card!
+                            </p>
+                            <a className="btn btn-primary" onClick={e => setHome()}>
+                                Go Home
+                            </a>
+                        </div>
+                    </div>
+                </div>
             )}
         </div>
     );

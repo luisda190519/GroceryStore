@@ -2,7 +2,7 @@ body {
     background-color: #fbfbfb;
 }
 
-#ProductView{
+#ProductView {
     margin-left: 18%;
 }
 
@@ -13,27 +13,31 @@ body {
     cursor: pointer;
 }
 
-.col-1{
+.col-1 {
     margin-left: -50px;
     margin-top: 150px;
 }
 
-.list-group-item{
+.list-group-item {
     cursor: pointer;
 }
 
-#allCat{
+#allCat {
     cursor: pointer;
 }
 
-#prodDes{
-    text-align:justify;
+#prodDes {
+    text-align: justify;
 }
 
-#clickNav{
+#clickNav {
     cursor: pointer;
 }
 
-#clickNav2{
+#clickNav2 {
+    cursor: pointer;
+}
+
+#flash {
     cursor: pointer;
 }

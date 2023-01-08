@@ -8,6 +8,7 @@ import ProductFocus from "./ProductFocus";
 import AddProduct from "./AddProduct";
 import AddVendor from "./AddVendor";
 import Checkout from "./Checkout";
+import Flash from "../Components/Flash";
 import { getRequest } from "../Components/Request";
 
 //Css
@@ -22,6 +23,7 @@ const Home = function ({ user }) {
     const [checkout, setCheckout] = useState(false);
     const [categoryFocus, setCategoryFocus] = useState("All Products");
     const [cart, setCart] = useState({});
+    const [flash, setFlash] = useState(false);
 
     async function requestProducts() {
         const productos = await getRequest("/api/products");
@@ -89,6 +91,13 @@ const Home = function ({ user }) {
         setCheckout(true);
     }
 
+    function flashMessage(message) {
+        setTimeout((message) => {
+            setFlash(false);
+        }, 5000);
+        setFlash(message);
+    }
+
     useEffect(() => {
         requestProducts();
         requestCategories();
@@ -118,6 +127,10 @@ const Home = function ({ user }) {
                 />
             </div>
 
+            <div className="container mt-4">
+                {flash ? <Flash className="mt-5" message={flash} /> : <div></div>}
+            </div>
+
             {productFocus ? (
                 <div id="ProductView" className="mx-auto">
                     <ProductFocus
@@ -130,7 +143,7 @@ const Home = function ({ user }) {
             ) : vendor ? (
                 <AddVendor setHome={setHome} />
             ) : checkout ? (
-                <Checkout setHome={setHome}/>
+                <Checkout setHome={setHome} flashMessage={flashMessage} />
             ) : (
                 <div className="container">
                     <div className="row">
