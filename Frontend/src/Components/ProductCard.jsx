@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getRequest, postRequest } from "../Components/Request";
 
-const ProductCard = function ({ product, setProcutFocus }) {
+const ProductCard = function ({ product, setProcutFocus, getCart }) {
     const numbers = [2, 3, 4, 5, 6, 7];
     const [vendor, setVendor] = useState({});
     const [quantity, setQuantity] = useState(1);
@@ -28,6 +28,7 @@ const ProductCard = function ({ product, setProcutFocus }) {
 
         setAdded(true);
         setTimeout(productAdded, 3000);
+        getCart();
         const sentCart = await postRequest("/api/cart", cart);
     }
 

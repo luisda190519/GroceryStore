@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ProductCard from "../Components/ProductCard";
 import { getRequest } from "../Components/Request";
 
-const ProductView = function ({ products, setProcutFocus, categoryFocus }) {
+const ProductView = function ({ products, setProcutFocus, categoryFocus, getCart }) {
     return (
         <div>
             <h1 className="text-center mt-5">{categoryFocus}</h1>
@@ -15,6 +15,7 @@ const ProductView = function ({ products, setProcutFocus, categoryFocus }) {
                                     <ProductCard
                                         product={product}
                                         setProcutFocus={setProcutFocus}
+                                        getCart={getCart}
                                     />
                                 </div>
                             </div>

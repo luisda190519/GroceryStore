@@ -1,14 +1,7 @@
 import { getRequest, postRequest } from "../Components/Request";
 import { useState, useEffect } from "react";
 
-const Navbar = function ({ setAddProduct, setAddVendor, setHome, goToChek }) {
-    const [cart, setCart] = useState({});
-    const [user, setUser] = useState(() =>
-        localStorage.getItem("user")
-            ? JSON.parse(localStorage.getItem("user"))
-            : false
-    );
-
+const Navbar = function ({ setAddProduct, setAddVendor, setHome, goToChek, cart, getCart }) {
     async function logout(e) {
         e.preventDefault();
         const user = await postRequest("/auth/logout", {});
@@ -16,14 +9,11 @@ const Navbar = function ({ setAddProduct, setAddVendor, setHome, goToChek }) {
         window.location.reload(true);
     }
 
-    async function getCart(){
-        const cart = await getRequest("/api/cart/" + user.id)
-        setCart(cart)
-    }
+    //console.log(cart)
 
-    useEffect(()=>{
-        getCart();
-    },[cart])
+    useEffect(() => {
+        //getCart();
+    }, [cart]);
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -89,7 +79,11 @@ const Navbar = function ({ setAddProduct, setAddVendor, setHome, goToChek }) {
                 </div>
 
                 <div className="d-flex align-items-center">
-                    <a className="text-reset me-3" id="clickNav" onClick={e => goToChek()}>
+                    <a
+                        className="text-reset me-3"
+                        id="clickNav"
+                        onClick={(e) => goToChek()}
+                    >
                         <i className="fas fa-shopping-cart"></i>
                         <span className="badge rounded-pill badge-notification bg-danger">
                             {cart.length}

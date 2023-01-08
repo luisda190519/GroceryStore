@@ -19,7 +19,7 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={user ? <Home /> : <Navigate replace to="/login" />} />
+                <Route path="/" element={user ? <Home user={user}/> : <Navigate replace to="/login" />} />
                 <Route path="/login" element={user ? <Navigate replace to="/" /> : <Login setUser={setLocalUser} />} />
                 <Route path="/signup" element={user ? <Navigate replace to="/" /> :<Signup setUser={setLocalUser} />} />
                 <Route path="*" element={<PageNotFound />} />

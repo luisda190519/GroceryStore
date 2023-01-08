@@ -13,7 +13,7 @@ import { getRequest } from "../Components/Request";
 //Css
 import "../CSS/Home.css";
 
-const Home = function () {
+const Home = function ({ user }) {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [productFocus, setProcutFocus] = useState(false);
@@ -21,15 +21,20 @@ const Home = function () {
     const [vendor, setAddVendor] = useState(false);
     const [checkout, setCheckout] = useState(false);
     const [categoryFocus, setCategoryFocus] = useState("All Products");
+    const [cart, setCart] = useState({});
 
     async function requestProducts() {
-        const products = await getRequest("/api/products");
-        setProducts(products);
+        const productos = await getRequest("/api/products");
+        if (productos !== products) {
+            setProducts(productos);
+        }
     }
 
     async function requestCategories() {
-        const categories = await getRequest("/api/categories");
-        setCategories(categories);
+        const categorias = await getRequest("/api/categories");
+        if (categories !== categorias) {
+            setCategories(categorias);
+        }
     }
 
     async function requestProductsByCategory(category) {
@@ -46,6 +51,11 @@ const Home = function () {
         }
     }
 
+    async function getCart() {
+        const cart = await getRequest("/api/cart/" + user.id);
+        setCart(cart);
+    }
+
     function setHome() {
         setProcutFocus(false);
         setAddProduct(false);
@@ -53,6 +63,9 @@ const Home = function () {
         setCheckout(false);
         setCategoryFocus("All Products");
         requestProducts();
+        requestProducts();
+        requestCategories();
+        getCart();
     }
 
     function setProduct() {
@@ -79,6 +92,7 @@ const Home = function () {
     useEffect(() => {
         requestProducts();
         requestCategories();
+        getCart();
     }, []);
 
     useEffect(() => {}, [
@@ -88,6 +102,7 @@ const Home = function () {
         categoryFocus,
         addProduct,
         vendor,
+        cart,
     ]);
 
     return (
@@ -98,6 +113,8 @@ const Home = function () {
                     setAddVendor={setVendor}
                     setHome={setHome}
                     goToChek={goToChek}
+                    cart={cart}
+                    getCart={getCart}
                 />
             </div>
 
@@ -112,7 +129,9 @@ const Home = function () {
                 <AddProduct setHome={setHome} />
             ) : vendor ? (
                 <AddVendor setHome={setHome} />
-            ) : checkout ? <Checkout/> :(
+            ) : checkout ? (
+                <Checkout setHome={setHome}/>
+            ) : (
                 <div className="container">
                     <div className="row">
                         <div id="categories" className="col-1">
@@ -129,6 +148,7 @@ const Home = function () {
                                     products={products}
                                     setProcutFocus={setProcutFocus}
                                     categoryFocus={categoryFocus}
+                                    getCart={getCart}
                                 />
                             </div>
                         </div>
