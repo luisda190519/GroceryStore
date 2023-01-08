@@ -17,9 +17,11 @@ router.get("/categories", async (req, res) => {
 });
 
 router.post("/products", async (req, res) => {
-    let vendor = await pool.query(`SELECT id FROM Vendor WHERE name = "${req.body.vendor}"`)
-    vendor = JSON.parse(JSON.stringify(vendor));    
-    
+    let vendor = await pool.query(
+        `SELECT id FROM Vendor WHERE name = "${req.body.vendor}"`
+    );
+    vendor = JSON.parse(JSON.stringify(vendor));
+
     const product = {
         name: req.body.name,
         description: req.body.description,
@@ -33,7 +35,6 @@ router.post("/products", async (req, res) => {
     const productCreated = await pool.query(`INSERT INTO Products set ?`, [
         product,
     ]);
-    
 });
 
 router.get("/products/category/:category", async (req, res) => {
@@ -52,7 +53,7 @@ router.get("/products/:productID", async (req, res) => {
 
 router.get("/vendorName/:vendorID", async (req, res) => {
     const name = await pool.query(
-        `SELECT name FROM Vendor WHERE id = ${req.params.vendorID};`
+        `SELECT * FROM Vendor WHERE id = ${req.params.vendorID};`
     );
     res.json(name);
 });
@@ -72,7 +73,30 @@ router.post("/vendors", async (req, res) => {
     const vendorCreated = await pool.query(`INSERT INTO Vendor set ?`, [
         vendor,
     ]);
+});
 
+router.post("/cart", async (req, res) => {
+    const product = {
+        total: req.body.total,
+        userID: req.body.userID,
+        productID: req.body.productID,
+        vendorID: req.body.vendorID,
+    };
+    const productAdded = await pool.query(`INSERT INTO Cart set ?`, [product]);
+});
+
+router.get("/cart/:userID", async (req, res) => {
+    const cart = await pool.query(
+        `SELECT * FROM Cart WHERE userID = "${req.params.userID}"`
+    );
+    res.json(cart);
+});
+
+router.get("/getProductsByUser/:userID", async (req, res) => {
+    const products = await pool.query(
+        `with productos(id, image_url, name, price, quantity, category, vendor) as ( SELECT p.id, p.image_url, p.name as name, p.price, (c.total/p.price), p.category, p.vendor FROM Products p JOIN Cart c ON p.id = c.productID WHERE c.userID = ${req.params.userID} ) SELECT p.id, p.image_url, p.name, p.price, p.quantity,p.category, v.name as vendor FROM productos p JOIN Vendor v ON p.vendor = v.id;`
+    );
+    res.json(products);
 });
 
 module.exports = router;

@@ -7,6 +7,7 @@ import ProductView from "./ProductViews";
 import ProductFocus from "./ProductFocus";
 import AddProduct from "./AddProduct";
 import AddVendor from "./AddVendor";
+import Checkout from "./Checkout";
 import { getRequest } from "../Components/Request";
 
 //Css
@@ -18,6 +19,7 @@ const Home = function () {
     const [productFocus, setProcutFocus] = useState(false);
     const [addProduct, setAddProduct] = useState(false);
     const [vendor, setAddVendor] = useState(false);
+    const [checkout, setCheckout] = useState(false);
     const [categoryFocus, setCategoryFocus] = useState("All Products");
 
     async function requestProducts() {
@@ -48,6 +50,7 @@ const Home = function () {
         setProcutFocus(false);
         setAddProduct(false);
         setAddVendor(false);
+        setCheckout(false);
         setCategoryFocus("All Products");
         requestProducts();
     }
@@ -56,12 +59,21 @@ const Home = function () {
         setProcutFocus(false);
         setAddProduct(true);
         setAddVendor(false);
+        setCheckout(false);
     }
 
     function setVendor() {
         setProcutFocus(false);
         setAddProduct(false);
         setAddVendor(true);
+        setCheckout(false);
+    }
+
+    function goToChek() {
+        setProcutFocus(false);
+        setAddProduct(false);
+        setAddVendor(false);
+        setCheckout(true);
     }
 
     useEffect(() => {
@@ -85,6 +97,7 @@ const Home = function () {
                     setAddProduct={setProduct}
                     setAddVendor={setVendor}
                     setHome={setHome}
+                    goToChek={goToChek}
                 />
             </div>
 
@@ -99,7 +112,7 @@ const Home = function () {
                 <AddProduct setHome={setHome} />
             ) : vendor ? (
                 <AddVendor setHome={setHome} />
-            ) : (
+            ) : checkout ? <Checkout/> :(
                 <div className="container">
                     <div className="row">
                         <div id="categories" className="col-1">

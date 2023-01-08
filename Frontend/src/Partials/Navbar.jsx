@@ -1,12 +1,29 @@
-import { postRequest } from "../Components/Request";
+import { getRequest, postRequest } from "../Components/Request";
+import { useState, useEffect } from "react";
 
-const Navbar = function ({setAddProduct, setAddVendor, setHome}) {
+const Navbar = function ({ setAddProduct, setAddVendor, setHome, goToChek }) {
+    const [cart, setCart] = useState({});
+    const [user, setUser] = useState(() =>
+        localStorage.getItem("user")
+            ? JSON.parse(localStorage.getItem("user"))
+            : false
+    );
+
     async function logout(e) {
         e.preventDefault();
         const user = await postRequest("/auth/logout", {});
         localStorage.clear();
         window.location.reload(true);
     }
+
+    async function getCart(){
+        const cart = await getRequest("/api/cart/" + user.id)
+        setCart(cart)
+    }
+
+    useEffect(()=>{
+        getCart();
+    },[cart])
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -37,17 +54,29 @@ const Navbar = function ({setAddProduct, setAddVendor, setHome}) {
                     </a>
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <a className="nav-link" id="clickNav" onClick={e => setHome()}>
+                            <a
+                                className="nav-link"
+                                id="clickNav"
+                                onClick={(e) => setHome()}
+                            >
                                 Home
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" id="clickNav" onClick={e => setAddProduct()}>
+                            <a
+                                className="nav-link"
+                                id="clickNav"
+                                onClick={(e) => setAddProduct()}
+                            >
                                 Add Product
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" id="clickNav" onClick={e => setAddVendor()}>
+                            <a
+                                className="nav-link"
+                                id="clickNav"
+                                onClick={(e) => setAddVendor()}
+                            >
                                 Add Vendor
                             </a>
                         </li>
@@ -60,13 +89,13 @@ const Navbar = function ({setAddProduct, setAddVendor, setHome}) {
                 </div>
 
                 <div className="d-flex align-items-center">
-                    <a className="text-reset me-3" href="#">
+                    <a className="text-reset me-3" id="clickNav" onClick={e => goToChek()}>
                         <i className="fas fa-shopping-cart"></i>
                         <span className="badge rounded-pill badge-notification bg-danger">
-                            1
+                            {cart.length}
                         </span>
                     </a>
-                    
+
                     <div className="dropdown">
                         <a
                             className="dropdown-toggle d-flex align-items-center hidden-arrow"
