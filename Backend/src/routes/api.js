@@ -93,22 +93,36 @@ router.get("/cart/:userID", async (req, res) => {
 });
 
 router.post("/payCart/:userID", async (req, res) => {
-    const pay = await pool.query(`DELETE FROM Cart WHERE userID = ${req.params.userID};`)
+    const pay = await pool.query(
+        `DELETE FROM Cart WHERE userID = ${req.params.userID};`
+    );
     res.json(pay);
 });
 
 router.get("/getProductsByUser/:userID", async (req, res) => {
     const products = await pool.query(
-        `with productos(id, image_url, name, price, quantity, category, vendor) as ( 
-            SELECT p.id, p.image_url, p.name as name, p.price, (c.total/p.price), p.category, p.vendor 
+        `with productos(id, image_url, name, price, quantity, category, vendor, description) as ( 
+            SELECT p.id, p.image_url, p.name as name, p.price, (c.total/p.price), p.category, p.vendor, p.description 
             FROM Products p JOIN Cart c ON p.id = c.productID 
             WHERE c.userID = ${req.params.userID} 
         ) 
         
-        SELECT p.id, p.image_url, p.name, p.price, p.quantity,p.category, v.name as vendor 
+        SELECT p.id, p.image_url, p.name, p.price, p.quantity,p.category, v.name as vendor, p.description 
         FROM productos p JOIN Vendor v ON p.vendor = v.id;`
     );
     res.json(products);
+});
+
+router.delete("/cart/:userID/:productID", async (req, res) => {
+    const remove = await pool.query(
+        `
+        DELETE
+        FROM Cart
+        WHERE productID = ${req.params.productID} AND userID = ${req.params.userID};
+        `
+    );
+
+    res.json(remove);
 });
 
 module.exports = router;

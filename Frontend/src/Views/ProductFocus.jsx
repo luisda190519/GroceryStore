@@ -9,8 +9,14 @@ const ProductFocus = function ({ product, setProcutFocus }) {
     }
 
     async function getVendorName() {
+        if (
+            typeof product.vendor === "string" ||
+            product.vendor instanceof String
+        ) {
+            return setVendor(product.vendor);
+        }
         const vendor = await getRequest("/api/vendorName/" + product.vendor);
-        setVendor(vendor[0].name);
+        return setVendor(vendor[0].name);
     }
 
     useEffect(() => {
@@ -32,9 +38,13 @@ const ProductFocus = function ({ product, setProcutFocus }) {
                                 <h5 className="card-title">
                                     Price: ${product.price}
                                 </h5>
-                                <button className="btn btn-danger w-25 mx-5 ">
-                                    Buy!
-                                </button>
+                                {product.quantity ? (
+                                    <div></div>
+                                ) : (
+                                    <button className="btn btn-danger w-25 mx-5 ">
+                                        Buy!
+                                    </button>
+                                )}
                             </div>
                         </div>
                         <div className="col">

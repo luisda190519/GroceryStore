@@ -1,14 +1,9 @@
-import { getRequest, postRequest } from "../Components/Request";
+import { getRequest, postRequest, deleteRequest } from "../Components/Request";
 import { useState, useEffect } from "react";
 
-const Checkout = function ({ setHome, flashMessage }) {
+const Checkout = function ({ setHome, flashMessage, user, setProcutFocus }) {
     const [cart, setCart] = useState({});
     const [products, setProducts] = useState([[{}]]);
-    const [user, setUser] = useState(() =>
-        localStorage.getItem("user")
-            ? JSON.parse(localStorage.getItem("user"))
-            : false
-    );
 
     async function payTheCart() {
         const pay = await postRequest("/api/payCart/" + user.id);
@@ -21,6 +16,19 @@ const Checkout = function ({ setHome, flashMessage }) {
         const products = await getRequest("/api/getProductsByUser/" + user.id);
         setCart(cart);
         setProducts(products);
+    }
+
+    async function viewProduct(e, product) {
+        e.preventDefault();
+        setProcutFocus(product)
+    }
+
+    async function deleteProduct(e, product) {
+        e.preventDefault();
+        const remove = await deleteRequest(
+            "/api/cart/" + user.id + "/" + product.id
+        );
+        getCart();
     }
 
     useEffect(() => {
@@ -77,12 +85,21 @@ const Checkout = function ({ setHome, flashMessage }) {
                                                 <button
                                                     type="button"
                                                     className="btn btn-success mx-1"
+                                                    onClick={(e) =>
+                                                        viewProduct(e, product)
+                                                    }
                                                 >
                                                     View
                                                 </button>
                                                 <button
                                                     type="button"
                                                     className="btn btn-danger mx-1"
+                                                    onClick={(e) =>
+                                                        deleteProduct(
+                                                            e,
+                                                            product
+                                                        )
+                                                    }
                                                 >
                                                     Delete
                                                 </button>
@@ -117,7 +134,10 @@ const Checkout = function ({ setHome, flashMessage }) {
                                 </span>{" "}
                                 to your card!
                             </p>
-                            <a className="btn btn-primary" onClick={e => setHome()}>
+                            <a
+                                className="btn btn-primary"
+                                onClick={(e) => setHome()}
+                            >
                                 Go Home
                             </a>
                         </div>

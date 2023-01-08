@@ -128,7 +128,11 @@ const Home = function ({ user }) {
             </div>
 
             <div className="container mt-4">
-                {flash ? <Flash className="mt-5" message={flash} /> : <div></div>}
+                {flash ? (
+                    <Flash className="mt-5" message={flash} />
+                ) : (
+                    <div></div>
+                )}
             </div>
 
             {productFocus ? (
@@ -143,7 +147,12 @@ const Home = function ({ user }) {
             ) : vendor ? (
                 <AddVendor setHome={setHome} />
             ) : checkout ? (
-                <Checkout setHome={setHome} flashMessage={flashMessage} />
+                <Checkout
+                    setHome={setHome}
+                    flashMessage={flashMessage}
+                    user={user}
+                    setProcutFocus={setProcutFocus}
+                />
             ) : (
                 <div className="container">
                     <div className="row">
