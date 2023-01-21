@@ -14,7 +14,7 @@ After downloading the project, go to the Frontend folder and type
   npm install
 ```
 
-This will install all the dependencies and libraries used in the Frontend, then go to the Backend folder and type the same
+This will install all the dependencies and libraries used in the Frontend, then go to the Backend folder and type the same.
     
 
 
