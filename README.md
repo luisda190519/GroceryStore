@@ -26,7 +26,7 @@ To deploy the app, first locate in the Frontend folder and type.
   npm run dev
 ```
 
-Then go to the Backend folder and type the following
+Then go to the Backend folder and type the following.
 
 ```bash
   npm run dev
